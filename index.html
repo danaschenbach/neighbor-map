@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="css/styling.css">
+        <link rel="stylesheet" type="text/js" href="js/lib/bootstrap.min.js">
+    </head>
+    <body>
+        <div class="container">
+            <div class="search-field">
+                <h1>Visit historical South Philly</h1>
+                <div>
+                    <input id="show-pins" type="button" value="Show Pins">
+                    <input id="hide-pins" type="button" value="Hide Pins">
+                </div>
+            </div>
+            <div id="map"></div>
+        </div>
+        <script src='js/app1.js'></script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCoVKUrpU93c6jnHHoZfEfOUx2NlqTFUbQ&v=3&callback=initMap">
+        </script>
+    </body>
+</html>

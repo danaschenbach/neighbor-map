@@ -1,0 +1,70 @@
+html, body {
+  font-family: Jim+Nightshade;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  height: 100%;
+  position: relative;
+}
+
+.search-field {
+  background: #59999a;
+  border: 1px solid #999;
+  border-radius: 3px;
+  height: 100%;
+  line-height: 35px;
+  padding: 10px 10px 30px 10px;
+  text-align: left;
+  width: 340px;
+}
+
+input {
+  font-size: 12px;
+}
+
+h1 {
+  color: #FF7B33;
+  font-size: 22px;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.text {
+  font-size: 14px;
+}
+
+#hide-pins,
+#show-pins {
+  width: 48%;
+}
+
+hr {
+  background: #3399FF;
+  height: 1px;
+  margin: 20px 0 20px 0;
+  border: none;
+}
+
+#map {
+  bottom:0px;
+  height: 100%;
+  left: 350px;
+  position: absolute;
+  right: 0px;
+}
+
+#places-search,
+#search-within-travel-time {
+  width: 84%;
+}
+
+#zoom-to-text {
+  width: 70%;
+}
+
+#zoom-to-area {
+  width: 24%;
+}
