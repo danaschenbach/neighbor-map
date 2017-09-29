@@ -3,6 +3,7 @@
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <meta charset="utf-8">
+        <script src='js/lib/knockout-3.4.2.js'></script>
         <link rel="stylesheet" type="text/css" href="css/styling.css">
         <link rel="stylesheet" type="text/js" href="js/lib/bootstrap.min.js">
     </head>
@@ -13,11 +14,29 @@
                 <div>
                     <input id="show-pins" type="button" value="Show Pins">
                     <input id="hide-pins" type="button" value="Hide Pins">
+                    <hr>
+                </div>
+                <div>
+                    <input id="zoom-to-text" type="text" placeholder="Favorite Philly Area?">
+                    <input id="zoom-to-area" type="button" value="Zoom">
+                    <hr>
+                </div>
+                <div>
+                    <h1>Or enjoy our wikipedia starter list</h1>
+                    <ul data-bind="foreach: pinList">
+                        <li data-bind="text: name, click: $parent.setPin"></li>
+                    </ul>
+                    <div class="wikipedia-container" data-bind="with: currentPin">
+                        <h3 data-bind="text: name"></h3>
+                        <h2 id="wiki-header"></h2>
+                        <ul id="wikipedia-links"></ul>
+                    </div>
                 </div>
             </div>
             <div id="map"></div>
         </div>
         <script src='js/app1.js'></script>
+        <script src="js/lib/jquery.min.js"></script>
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCoVKUrpU93c6jnHHoZfEfOUx2NlqTFUbQ&v=3&callback=initMap">
         </script>
