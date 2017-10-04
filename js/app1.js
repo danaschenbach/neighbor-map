@@ -380,9 +380,9 @@ function initMap() {
 	var myLocations = [
 		{name: "Jim's Steaks", latlngLoc: {lat: 39.941557, lng: -75.149310}},
     	{name: "Theater of the Living Arts", latlngLoc: {lat: 39.941461, lng: -75.148745}},
-    	{name: "Jon's Bar & Grille", latlngLoc: {lat: 39.941308, lng: -75.147777}},
+    	{name: "Inferno Body Piercing", latlngLoc: {lat: 39.941932, lng: -75.152870}},
     	{name: "South Street Diner", latlngLoc: {lat: 39.941032, lng: -75.145230}},
-    	{name: "Mason-Dixon Survey Historical Marker", latlngLoc: {lat: 39.940975, lng: -75.144052}}
+    	{name: "Philadelphia's Magic Gardens", latlngLoc: {lat: 39.942642, lng: -75.159285}}
 	];
 
 	var Pin = function(data) {
@@ -401,7 +401,10 @@ function initMap() {
 		this.currentPin = ko.observable(this.pinList()[0]);
 
 		this.setPin = function(clickedPin) {
+            largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
+            showInfoWindow(markers[clickedPin.name.Gc-2], largeInfoWindow);
+            loadData(markers[clickedPin.name.Gc-2].name);
 		};
 
 	};
@@ -409,6 +412,8 @@ function initMap() {
 
 
 	var largeInfoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
 
 	var defaultIcon = makeIcon('blue-pushpin.png');
 
@@ -418,7 +423,8 @@ function initMap() {
     	var position = myLocations[i].latlngLoc;
     	var name = myLocations[i].name;
     		var marker = new google.maps.Marker({
-        		position: position,
+        		map: map,
+                position: position,
         		name: name,
         		animation: google.maps.Animation.DROP,
         		icon: defaultIcon,
@@ -430,6 +436,10 @@ function initMap() {
     	marker.addListener('click', function() {
     		showInfoWindow(this, largeInfoWindow);
     	});
+
+        bounds.extend(markers[i].position);
+
+        map.fitBounds(bounds);
 
     	marker.addListener('mouseover', function() {
     		this.setIcon(highlightIcon);
@@ -528,15 +538,15 @@ function zoomToArea() {
 	}
 }
 
-function loadData() {
-	var $wikiElem = $('#wikipedia-links');
+function loadData(name) {
+	var $wikiElem = $('#wiki-links');
 
 	$wikiElem.text("");
 
-	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + cityStr + '&format=json&callback=wikiCallback';
+	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
     var wikiRequestTimeout = setTimeout(function(){
-        $wikiElem.text("failed to get wikipedia resources");
-    }, 8000);
+        $wikiElem.text("failed to get wiki links");
+    }, 1000);
 
     $.ajax({
         url: wikiUrl,
@@ -556,5 +566,3 @@ function loadData() {
     });
     return false;
 };
-
-//$('#form-container').submit(loadData);
