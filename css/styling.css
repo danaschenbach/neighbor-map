@@ -1,5 +1,5 @@
 html, body {
-  font-family: Jim+Nightshade;
+  font-family: 'Creepster', cursive;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -51,14 +51,9 @@ hr {
 #map {
   bottom:0px;
   height: 100%;
-  left: 350px;
+  left: 362px;
   position: absolute;
   right: 0px;
-}
-
-#places-search,
-#search-within-travel-time {
-  width: 84%;
 }
 
 #zoom-to-text {
