@@ -4,11 +4,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <meta charset="utf-8">
         <script src='js/lib/knockout-3.4.2.js'></script>
+        <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/styling.css">
         <link rel="stylesheet" type="text/js" href="js/lib/bootstrap.min.js">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="search-field">
                 <h1>Visit historical South Philly</h1>
                 <div>
@@ -17,6 +18,7 @@
                     <hr>
                 </div>
                 <div>
+                    <h3>Or your Favorite Philly spot</h3>
                     <input id="zoom-to-text" type="text" placeholder="Favorite Philly Area?">
                     <input id="zoom-to-area" type="button" value="Zoom">
                     <hr>
@@ -26,10 +28,10 @@
                     <ul data-bind="foreach: pinList">
                         <li data-bind="text: name, click: $parent.setPin"></li>
                     </ul>
-                    <div class="wikipedia-container" data-bind="with: currentPin">
+                    <div class="wiki-container" data-bind="with: currentPin">
                         <h2 id="wiki-header">Wiki info for:</h2>
                         <h3 data-bind="text: name"></h3>
-                        <ul id="wiki-links"></ul>
+                        <ul id="wiki-links">Wiki Response</ul>
                     </div>
                 </div>
             </div>
