@@ -3,7 +3,7 @@ var map;
 var markers = [];
 
 var placeMarkers = [];
-
+// create styles array
 function initMap() {
 	var styles = [
     {
@@ -370,13 +370,14 @@ function initMap() {
         ]
     }
 ]
+	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.941557, lng: -75.149310},
 		zoom: 13,
 		styles: styles,
 		mapTypeControl: false
 	});
-
+	//locations list-would normally be in database
 	var myLocations = [
 		{name: "Jim's Steaks", latlngLoc: {lat: 39.941557, lng: -75.149310}},
     	{name: "Theater of the Living Arts", latlngLoc: {lat: 39.941461, lng: -75.148745}},
@@ -384,7 +385,7 @@ function initMap() {
     	{name: "South Street Diner", latlngLoc: {lat: 39.941032, lng: -75.145230}},
     	{name: "Philadelphia's Magic Gardens", latlngLoc: {lat: 39.942642, lng: -75.159285}}
 	];
-
+	//makes list clickable & ties together with markers
 	var Pin = function(data) {
 		this.name = ko.observable(data.name);
 	}
@@ -418,7 +419,7 @@ function initMap() {
 	var defaultIcon = makeIcon('blue-pushpin.png');
 
 	var highlightIcon = makeIcon('grn-pushpin.png');
-
+	//array of markers per location
 	function makeMarkers(i) {
     	var position = myLocations[i].latlngLoc;
     	var name = myLocations[i].name;
@@ -459,7 +460,7 @@ function initMap() {
     	zoomToArea();
     });
 }
-
+	//populates info window on clicked marker
 function showInfoWindow(marker, infoWindow) {
 	if (infoWindow.marker != marker) {
 		infoWindow.setContent('');
@@ -515,7 +516,7 @@ function makeIcon(markerColor) {
 		'http://maps.google.com/mapfiles/ms/micons/' + markerColor);
 	return markerImage;
 }
-
+//takes input locates it then zooms in to area
 function zoomToArea() {
 	var geo = new google.maps.Geocoder();
 	var locate = document.getElementById('zoom-to-text').value;
@@ -537,7 +538,7 @@ function zoomToArea() {
 			});
 	}
 }
-
+//finds wiki info for clicked list item
 function loadData(name) {
 	var $wikiElem = $('#wiki-links');
 
