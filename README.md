@@ -1,3 +1,12 @@
 # neighbor-map
-looking at historical South Street. Given a starter list of places with pins & infoWindow. Click on a list item to see its matching
-pin, infoWindow & wiki info
+You can be up and running with this cool map in 3 easy steps:
+step 1: download index.html, the css file and the js file to the same directory
+step 2: dubble click on index.html
+step 3: stare in awe...lol(silly little map)
+
+To start off you will be looking at Historical South Street, the true birthplace of the 'Hippie' 
+movement. Feel free to check out other parts of Philly by entering them in the search box(BTW Will Smith is from Overbrook
+about 10 blocks from where I grew up).
+
+All this was made possible with intellectual funding by; Udacity forum, Google, stackoverflow.com, friends
+and people like you(sorry been watching PBS...lol)
