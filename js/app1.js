@@ -471,7 +471,7 @@ function showInfoWindow(marker, infoWindow) {
 		var streetViewService = new google.maps.StreetViewService();
 		var radius = 50;
 
-function getStreetView(data, status) {
+var getStreetView = function(data, status) {
 	if (status == google.maps.StreetViewStatus.OK) {
 		var nearStreetViewLocation = data.location.latLng;
 		var heading = google.maps.geometry.spherical.computeHeading(
