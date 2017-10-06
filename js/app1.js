@@ -521,7 +521,7 @@ function zoomToArea() {
 	var geo = new google.maps.Geocoder();
 	var locate = document.getElementById('zoom-to-text').value;
 
-	if (locate == '') {
+	if (locate === '') {
 		window.alert("Sorry, I can't find 'nothing' ");
 	} else {
 		geo.geocode(
