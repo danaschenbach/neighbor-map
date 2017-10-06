@@ -2,6 +2,8 @@ var map;
 
 var markers = [];
 
+var placeMarkers = [];
+// create styles array
 function initMap() {
 	var styles = [
     {
@@ -368,13 +370,14 @@ function initMap() {
         ]
     }
 ];
+	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.941557, lng: -75.149310},
 		zoom: 13,
 		styles: styles,
 		mapTypeControl: false
 	});
-
+	//locations list-would normally be in database
 	var myLocations = [
 		{name: "Jim's Steaks", latlngLoc: {lat: 39.941557, lng: -75.149310}},
     	{name: "Theater of the Living Arts", latlngLoc: {lat: 39.941461, lng: -75.148745}},
@@ -382,7 +385,7 @@ function initMap() {
     	{name: "South Street Diner", latlngLoc: {lat: 39.941032, lng: -75.145230}},
     	{name: "Philadelphia's Magic Gardens", latlngLoc: {lat: 39.942642, lng: -75.159285}}
 	];
-
+	//makes list clickable & ties together with markers
 	var Pin = function(data) {
 		this.name = ko.observable(data.name);
 	};
@@ -416,7 +419,7 @@ function initMap() {
 	var defaultIcon = makeIcon('blue-pushpin.png');
 
 	var highlightIcon = makeIcon('grn-pushpin.png');
-
+	//array of markers per location
 	function makeMarkers(i) {
     	var position = myLocations[i].latlngLoc;
     	var name = myLocations[i].name;
@@ -457,54 +460,68 @@ function initMap() {
     	zoomToArea();
     });
 }
-
+	//populates info window on clicked marker
 function showInfoWindow(marker, infoWindow) {
 	if (infoWindow.marker != marker) {
 		infoWindow.setContent('');
 		infoWindow.marker = marker;
-    }
 		infoWindow.addListener('closeclick', function() {
 			infoWindow.marker = null;
 		});
-}
-//function getStreetView(data, status) {
-var getStreetView = function(data, status) {
-	if (status == google.maps.StreetViewStatus.OK) {
-		var nearStreetViewLocation = data.location.latLng;
-		var heading = google.maps.geometry.spherical.computeHeading(
-			nearStreetViewLocation, marker.position);
-			infoWindow.setContent('<div>' + marker.name + '</div><div id="pano"></div');
-			}
-	streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-	infoWindow.open(map, marker);
-};
+		var streetViewService = new google.maps.StreetViewService();
+		var radius = 50;
 
-var showPins = function() {
+var getStreetView = function(data, status) {
+			if (status == google.maps.StreetViewStatus.OK) {
+				var nearStreetViewLocation = data.location.latLng;
+				var heading = google.maps.geometry.spherical.computeHeading(
+					nearStreetViewLocation, marker.position);
+					infoWindow.setContent('<div>' + marker.name + '</div><div id="pano"></div');
+					var panoramaOptions = {
+						position: nearStreetViewLocation,
+						pov: {
+							heading: heading,
+							pitch: 30
+						}
+					};
+				var panorama = new google.maps.StreetViewPanorama(
+					document.getElementById('pano'), panoramaOptions);
+			} else {
+				infoWindow.setContent('<div>' + marker.name + '</div>' +
+					'<div>No Street View</div>');
+			}
+		};
+		streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+		infoWindow.open(map, marker);	
+	}
+}
+
+function showPins() {
 	var bounds = new google.maps.LatLngBounds();
 	for (var i=0; i < markers.length; i++) {
 		markers[i].setMap(map);
 		bounds.extend(markers[i].position);
 	}
 	map.fitBounds(bounds);
-};
+}
 
-var hidePins = function() {
+function hidePins() {
 	for (var i=0; i < markers.length; i++) {
 		markers[i].setMap(null);
 	}
-};
+}
 
-var makeIcon = function(markerColor) {
+function makeIcon(markerColor) {
 	var markerImage = new google.maps.MarkerImage(
 		'http://maps.google.com/mapfiles/ms/micons/' + markerColor);
 	return markerImage;
-};
-
-var zoomToArea = function() {
+}
+//takes input locates it then zooms in to area
+function zoomToArea() {
 	var geo = new google.maps.Geocoder();
 	var locate = document.getElementById('zoom-to-text').value;
 
-	if (locate === '') {
+	if (locate == '') {
 		window.alert("Sorry, I can't find 'nothing' ");
 	} else {
 		geo.geocode(
@@ -520,9 +537,9 @@ var zoomToArea = function() {
 				}
 			});
 	}
-};
-
-var loadData = function(name) {
+}
+//finds wiki info for clicked list item
+function loadData(name) {
 	var $wikiElem = $('#wiki-links');
 
 	$wikiElem.text("");
@@ -530,7 +547,7 @@ var loadData = function(name) {
 	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
     var wikiRequestTimeout = setTimeout(function(){
         $wikiElem.text("failed to get wiki links");
-    }, 8000);
+    }, 1000);
 
     $.ajax({
         url: wikiUrl,
@@ -549,4 +566,4 @@ var loadData = function(name) {
         }
     });
     return false;
-};
+}
