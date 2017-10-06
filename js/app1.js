@@ -476,8 +476,7 @@ var getStreetView = function(data, status) {
 			infoWindow.setContent('<div>' + marker.name + '</div><div id="pano"></div');
 			}
 	streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-	infoWindow.open(map, marker);	
-	};
+	infoWindow.open(map, marker);
 };
 
 var showPins = function() {
