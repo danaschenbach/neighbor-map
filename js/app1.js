@@ -369,7 +369,7 @@ function initMap() {
             }
         ]
     }
-]
+];
 	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.941557, lng: -75.149310},
@@ -388,7 +388,7 @@ function initMap() {
 	//makes list clickable & ties together with markers
 	var Pin = function(data) {
 		this.name = ko.observable(data.name);
-	}
+	};
 
 	var ViewModel = function() {
 		var self = this;
@@ -521,7 +521,7 @@ function zoomToArea() {
 	var geo = new google.maps.Geocoder();
 	var locate = document.getElementById('zoom-to-text').value;
 
-	if (locate == '') {
+	if (locate === '') {
 		window.alert("Sorry, I can't find 'nothing' ");
 	} else {
 		geo.geocode(
@@ -560,10 +560,10 @@ function loadData(name) {
                 articleStr = articleList[i];
                 var url = 'http://en.wikipedia.org/wiki/' + articleStr;
                 $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-            };
+            }
 
             clearTimeout(wikiRequestTimeout);
         }
     });
     return false;
-};
+}
