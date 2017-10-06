@@ -490,7 +490,7 @@ var getStreetView = function(data, status) {
 		infoWindow.setContent('<div>' + marker.name + '</div>' +
 			'<div>No Street View</div>');
 	}
-}
+};
 	streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
 	infoWindow.open(map, marker);	
 	}
