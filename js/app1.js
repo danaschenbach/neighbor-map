@@ -8,7 +8,7 @@ function initMap() {
 	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.941557, lng: -75.149310},
-		zoom: 13,
+		zoom: 20,
 		styles: styles,
 		mapTypeControl: false
 	});
@@ -43,10 +43,22 @@ function initMap() {
 			showInfoWindow(markers[clickedPin.name.Gc-2], largeInfoWindow);
 			loadData(markers[clickedPin.name.Gc-2].name);
 		};
+
+		self.myLocations = myLocations;
+		self.selectedType = ko.observable("All");
+		self.filteredmyLocations = ko.computed(function() {
+			var type = self.selectedType();
+			if(type === "All") {
+			return self.myLocations;
+			} else {
+				var tempList = self.myLocations.slice();
+				return tempList.filter(function(myLocations) {
+					return myLocations.type === name;
+				});
+			}
+		});
 	};
-
 	ko.applyBindings(new ViewModel());
-
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
