@@ -16,16 +16,26 @@
 				</div>	
 					<button data-bind="click: showPins">Show Pins</button>
 					<button data-bind="click: hidePins">Hide Pins</button>
-					<hr>
 				<ul class="list-unstyled components">
-					<li class="active"><a href="#">Starter List</a></li>
-					<li><a href="#">Search</a></li>
-					<li>
+					<a href="#list" data-toggle="collapse" aria-expanded="false">Starter List</a>
+					<ul class="collapse list-unstyled" id="list" data-bind="foreach: pinList">
+						<li data-bind="text: name, click: $parent.setPin"></li>
+					</ul>
+					<hr>
+					<input data_bind="textInput: filter" id="zoomtotext" placeholder="Search Philadelphia">
+					<button data-bind="click: zoomToArea">Zoom</button>
+					<hr>
 						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Filter List</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<li><a href="#">Food</a></li>
-							<li><a href="#">Entertainment</a></li>
-							<li><a href="#">Body Art</a></li>
+						<div class="filter">
+							<li><input type="radio" name="type" checked value="All" data-bind="checked: selectedType" />All</li>
+							<li><input type="radio" name="type" checked value="Food" data-bind="checked: selectedType" />Food </li>
+							<li><input type="radio" name="type" checked value="Entertainment" data-bind="checked: selectedType" />Entertainment</li>
+							<li><input type="radio" name="type" checked value="Body Art" data-bind="checked: selectedType" />Body Art</li>
+							<ul class="myLocations-list" data-bind="foreach: filteredmyLocations">
+								<li data-bind="text: name"></li>
+							</ul>
+						</div>
 						</ul>
 					<li class="wiki-container" data-bind="with: currentPin, marker"></li>
 						<h4 id="wiki-header">Wiki info for:</h4>
@@ -37,7 +47,7 @@
 				<nav class="navbar navbar-default">
 					<div class="container-fluid">
 						<div class="navbar-header">
-							<button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+							<button type="button" id="sidebarCollapse" class="navbar-btn">
 								<i class="glyphicon glyphicon-align-left"></i>
 							</button>
 						</div>
