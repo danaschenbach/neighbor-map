@@ -1,46 +1,66 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-        <meta charset="utf-8">
-        <script src='js/lib/knockout-3.4.2.js'></script>
-        <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/styling.css">
-        <link rel="stylesheet" type="text/js" href="js/lib/bootstrap.min.js">
-    </head>
-    <body>
-        <div class="container-fluid">
-            <div class="search-field">
-                <h1>Visit historical South Philly</h1>
-                <div>
-                    <input id="show-pins" type="button" value="Show Pins">
-                    <input id="hide-pins" type="button" value="Hide Pins">
-                    <hr>
-                </div>
-                <div>
-                    <h3>Or your Favorite Philly spot</h3>
-                    <input id="zoom-to-text" type="text" placeholder="Favorite Philly Area?">
-                    <input id="zoom-to-area" type="button" value="Zoom">
-                    <hr>
-                </div>
-                <div>
-                    <h1>Or enjoy our wikipedia starter list</h1>
-                    <ul data-bind="foreach: pinList">
-                        <li data-bind="text: name, click: $parent.setPin"></li>
-                    </ul>
-                    <div class="wiki-container" data-bind="with: currentPin">
-                        <h2 id="wiki-header">Wiki info for:</h2>
-                        <h3 data-bind="text: name"></h3>
-                        <ul id="wiki-links">Wiki Response</ul>
-                    </div>
-                </div>
-            </div>
-            <div id="map"></div>
-        </div>
-        <script src='js/app1.js'></script>
-        <script src="js/lib/jquery.min.js"></script>
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCoVKUrpU93c6jnHHoZfEfOUx2NlqTFUbQ&v=3&callback=initMap">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+		<meta charset="utf-8">
+		<script src='js/lib/knockout-3.4.2.js'></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Creepster">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/styling.css">
+	</head>
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar">
+				<div class="sidebar-header">
+					<h1>Old Stomping Grounds</h1>
+				</div>	
+					<button data-bind="click: showPins">Show Pins</button>
+					<button data-bind="click: hidePins">Hide Pins</button>
+					<hr>
+				<ul class="list-unstyled components">
+					<li class="active"><a href="#">Starter List</a></li>
+					<li><a href="#">Search</a></li>
+					<li>
+						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Filter List</a>
+						<ul class="collapse list-unstyled" id="homeSubmenu">
+							<li><a href="#">Food</a></li>
+							<li><a href="#">Entertainment</a></li>
+							<li><a href="#">Body Art</a></li>
+						</ul>
+					<li class="wiki-container" data-bind="with: currentPin, marker"></li>
+						<h4 id="wiki-header">Wiki info for:</h4>
+						<ul id="wiki-links"></ul>
+				</ul>
+			</nav>
+			<div id="content">
+				<div id="map"></div>
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+								<i class="glyphicon glyphicon-align-left"></i>
+							</button>
+						</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						</div>
+					</div>
+				</nav>				
+			</div>	
+		</div>
+		<script src="js/lib/styler.js"></script>
+		<script src="js/app1.js"></script>
+		<script src="js/lib/jquery-3.2.1.js"></script>
+		<script src="js/lib/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCoVKUrpU93c6jnHHoZfEfOUx2NlqTFUbQ&v=3&callback=initMap" onerror="loadError()">
+		</script>
+		<script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
         </script>
-    </body>
+	</body>
 </html>
