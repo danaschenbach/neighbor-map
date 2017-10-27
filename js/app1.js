@@ -14,17 +14,17 @@ function initMap() {
 	});
 	//locations list-would normally be in database
 	var myLocations = [
-		{name: "Jim's Steaks", type: "food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
-		{name: "Theater of the Living Arts", type: "entertainment", latlngLoc: {lat: 39.941461, lng: -75.148745}},
-		{name: "Inferno Body Piercing", type: "body art", latlngLoc: {lat: 39.941932, lng: -75.152870}},
-		{name: "South Street Diner", type: "food", latlngLoc: {lat: 39.941032, lng: -75.145230}},
-		{name: "Philadelphia's Magic Gardens", type: "entertainment", latlngLoc: {lat: 39.942642, lng: -75.159285}}
+		{name: "Jim's Steaks", type: "Food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
+		{name: "Theater of the Living Arts", type: "Entertainment", latlngLoc: {lat: 39.941461, lng: -75.148745}},
+		{name: "Inferno Body Piercing", type: "Body Art", latlngLoc: {lat: 39.941932, lng: -75.152870}},
+		{name: "South Street Diner", type: "Food", latlngLoc: {lat: 39.941032, lng: -75.145230}},
+		{name: "Philadelphia's Magic Gardens", type: "Entertainment", latlngLoc: {lat: 39.942642, lng: -75.159285}}
 	];
 	//makes list clickable & ties together with markers
 	var Pin = function(data) {
 		this.name = ko.observable(data.name);
 		this.type = ko.observable(data.type);
-	};
+	};	
 
 	var ViewModel = function() {
 		var self = this;
@@ -40,8 +40,8 @@ function initMap() {
 		this.setPin = function(clickedPin) {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
-			showInfoWindow(markers[clickedPin.name.Gc-2], largeInfoWindow);
-			loadData(markers[clickedPin.name.Gc-2].name);
+			showInfoWindow(markers[clickedPin.name.Gc-3], largeInfoWindow);
+			loadData(markers[clickedPin.name.Gc-3].name);
 		};
 
 		self.myLocations = myLocations;
@@ -52,8 +52,8 @@ function initMap() {
 			return self.myLocations;
 			} else {
 				var tempList = self.myLocations.slice();
-				return tempList.filter(function(myLocations) {
-					return myLocations.type === name;
+				return tempList.filter(function(myLocation) {
+					return myLocation.type === type;
 				});
 			}
 		});
@@ -204,12 +204,13 @@ function loadData(name) {
 		jsonp: "callback"
 	}).done(function(response) {
 		var articleList = response[1];
+		console.log(response);
 		for (var i = 0; i < articleList.length; i++) {
 			articleStr = articleList[i];
 			var url = 'http://en.wikipedia.org/wiki/' + articleStr;
 			$wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
 			}
 	}).fail(function (jqXHR, textStatus) {
-		window.alert('could not get wiki info')
+		window.alert('could not get wiki info');
 	});
-};
+}
