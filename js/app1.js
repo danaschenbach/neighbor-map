@@ -40,8 +40,8 @@ function initMap() {
 		this.setPin = function(clickedPin) {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
-			showInfoWindow(markers[clickedPin.name.Gc-3], largeInfoWindow);
-			loadData(markers[clickedPin.name.Gc-3].name);
+			showInfoWindow(myLocations[clickedPin.name], largeInfoWindow);
+			loadData(myLocations[clickedPin.name]);
 		};
 
 		self.myLocations = myLocations;
@@ -56,6 +56,7 @@ function initMap() {
 					return myLocation.type === type;
 				});
 			}
+			this.setPin.push(new Pin(type));
 		});
 	};
 	ko.applyBindings(new ViewModel());
@@ -191,12 +192,12 @@ function zoomToArea() {
 	}
 }
 //finds wiki info for clicked list item
-function loadData(name) {
+function loadData(myLocation) {
 	var $wikiElem = $('#wiki-links');
 
 	$wikiElem.text("");
 
-	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
+	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + myLocation + '&format=json&callback=wikiCallback';
 
 	$.ajax({
 		url: wikiUrl,
