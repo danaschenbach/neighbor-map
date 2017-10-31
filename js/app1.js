@@ -1,5 +1,5 @@
 var map;
-
+var infoWindow;
 var markers = [];
 
 var placeMarkers = [];
@@ -31,7 +31,7 @@ function initMap() {
 
 		this.pinList = ko.observableArray([]);
 
-		myLocations.forEach(function(pinItem){
+		myLocations.forEach(function(pinItem) {
 			self.pinList.push(new Pin(pinItem));
 		});
 
@@ -40,13 +40,13 @@ function initMap() {
 		this.setPin = function(clickedPin) {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
-			showInfoWindow(myLocations[clickedPin.name], largeInfoWindow);
-			loadData(myLocations[clickedPin.name]);
+			showInfoWindow(clickedPin.marker, largeInfoWindow);
+			loadData(clickedPin.name);
 		};
 
 		self.myLocations = myLocations;
 		self.selectedType = ko.observable("All");
-		self.filteredmyLocations = ko.computed(function() {
+		self.filteredmyLocations = ko.computed(function(pinItem) {
 			var type = self.selectedType();
 			if(type === "All") {
 			return self.myLocations;
@@ -56,7 +56,6 @@ function initMap() {
 					return myLocation.type === type;
 				});
 			}
-			this.setPin.push(new Pin(type));
 		});
 	};
 	ko.applyBindings(new ViewModel());
@@ -72,10 +71,12 @@ function initMap() {
 	function makeMarkers(i) {
 		var position = myLocations[i].latlngLoc;
 		var name = myLocations[i].name;
+		var type = myLocations[i].type;
 			var marker = new google.maps.Marker({
 				map: map,
 				position: position,
 				name: name,
+				type: type,
 				animation: google.maps.Animation.DROP,
 				icon: defaultIcon,
 				id: i
@@ -192,12 +193,12 @@ function zoomToArea() {
 	}
 }
 //finds wiki info for clicked list item
-function loadData(myLocation) {
+function loadData(name) {
 	var $wikiElem = $('#wiki-links');
 
 	$wikiElem.text("");
 
-	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + myLocation + '&format=json&callback=wikiCallback';
+	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
 
 	$.ajax({
 		url: wikiUrl,
