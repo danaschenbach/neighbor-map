@@ -1,8 +1,15 @@
 var map;
 var infoWindow;
 var markers = [];
-
 var placeMarkers = [];
+	//locations list-would normally be in database
+var myLocations = [
+	{name: "Jim's Steaks", type: "Food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
+	{name: "Theater of the Living Arts", type: "Entertainment", latlngLoc: {lat: 39.941461, lng: -75.148745}},
+	{name: "Inferno Body Piercing", type: "Body Art", latlngLoc: {lat: 39.941932, lng: -75.152870}},
+	{name: "South Street Diner", type: "Food", latlngLoc: {lat: 39.940978, lng: -75.145252}},
+	{name: "Philadelphia's Magic Gardens", type: "Entertainment", latlngLoc: {lat: 39.942642, lng: -75.159285}}
+];
 // create styles array
 function initMap() {
 	//create new map
@@ -12,14 +19,6 @@ function initMap() {
 		styles: styles,
 		mapTypeControl: false
 	});
-	//locations list-would normally be in database
-	var myLocations = [
-		{name: "Jim's Steaks", type: "Food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
-		{name: "Theater of the Living Arts", type: "Entertainment", latlngLoc: {lat: 39.941461, lng: -75.148745}},
-		{name: "Inferno Body Piercing", type: "Body Art", latlngLoc: {lat: 39.941932, lng: -75.152870}},
-		{name: "South Street Diner", type: "Food", latlngLoc: {lat: 39.941032, lng: -75.145230}},
-		{name: "Philadelphia's Magic Gardens", type: "Entertainment", latlngLoc: {lat: 39.942642, lng: -75.159285}}
-	];
 	//makes list clickable & ties together with markers
 	var Pin = function(data) {
 		this.name = ko.observable(data.name);
@@ -37,13 +36,6 @@ function initMap() {
 
 		this.currentPin = ko.observable(this.pinList()[0]);
 
-		this.setPin = function(clickedPin) {
-			largeInfoWindow.marker = null;
-			self.currentPin(clickedPin);
-			showInfoWindow(clickedPin.marker, largeInfoWindow);
-			loadData(clickedPin.name);
-		};
-
 		self.myLocations = myLocations;
 		self.selectedType = ko.observable("All");
 		self.filteredmyLocations = ko.computed(function(pinItem) {
@@ -57,6 +49,13 @@ function initMap() {
 				});
 			}
 		});
+		this.setPin = function(clickedPin, marker) {
+			largeInfoWindow.marker = null;
+			self.currentPin(clickedPin);
+			showInfoWindow(clickedPin.setPin.type, largeInfoWindow);
+			console.log(clickedPin.setPin.type);
+			loadData(clickedPin.name);
+		};
 	};
 	ko.applyBindings(new ViewModel());
 
@@ -103,11 +102,12 @@ function initMap() {
 
 	for (var i=0; i < myLocations.length; i++) {
 		makeMarkers(i);
+		console.log(markers);
 	}
 }
 
 var loadError = function() {
-	window.console.log("Sorry but I can't comply");
+	console.log("Sorry but I can't comply");
 	window.alert("Sorry but I can't comply");
 };
 	//populates info window on clicked marker
