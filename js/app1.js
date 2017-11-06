@@ -52,8 +52,8 @@ function initMap() {
 		this.setPin = function(clickedPin, marker) {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
-			showInfoWindow(clickedPin.setPin.type, largeInfoWindow);
-			console.log(clickedPin.setPin.type);
+			showInfoWindow(clickedPin, largeInfoWindow);
+			console.log(clickedPin);
 			loadData(clickedPin.name);
 		};
 	};
