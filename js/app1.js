@@ -1,7 +1,7 @@
 var map;
 var infoWindow;
 var markers = [];
-var placeMarkers = [];
+var vm;
 	//locations list-would normally be in database
 var myLocations = [
 	{name: "Jim's Steaks", type: "Food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
@@ -15,7 +15,7 @@ function initMap() {
 	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 39.941557, lng: -75.149310},
-		zoom: 20,
+		zoom: 12,
 		styles: styles,
 		mapTypeControl: false
 	});
@@ -30,34 +30,38 @@ function initMap() {
 
 		this.pinList = ko.observableArray([]);
 
-		myLocations.forEach(function(pinItem) {
+/*		myLocations.forEach(function(pinItem) {
 			self.pinList.push(new Pin(pinItem));
-		});
+		});*/
 
 		this.currentPin = ko.observable(this.pinList()[0]);
-
+// Modified filter function, original by Blake Watson on codepen
 		self.myLocations = myLocations;
 		self.selectedType = ko.observable("All");
 		self.filteredmyLocations = ko.computed(function(pinItem) {
 			var type = self.selectedType();
 			if(type === "All") {
-			return self.myLocations;
+	// iterate over self.myLocations & set marker to visible
+				return self.myLocations;
 			} else {
 				var tempList = self.myLocations.slice();
 				return tempList.filter(function(myLocation) {
-					return myLocation.type === type;
+					var match = myLocation.type === type;
+					console.log(myLocation)
+					myLocation.marker.setVisible(match)
+					return match;
 				});
 			}
 		});
-		this.setPin = function(clickedPin, marker) {
+		this.setPin = function(clickedPin) {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
-			showInfoWindow(clickedPin, largeInfoWindow);
-			console.log(clickedPin);
+			showInfoWindow(clickedPin.marker, largeInfoWindow);
 			loadData(clickedPin.name);
 		};
 	};
-	ko.applyBindings(new ViewModel());
+	vm = new ViewModel();
+	ko.applyBindings(vm);
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -80,6 +84,8 @@ function initMap() {
 				icon: defaultIcon,
 				id: i
 		});
+
+		vm.myLocations[i].marker = marker;
 
 		markers.push(marker);
 
