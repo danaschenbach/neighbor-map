@@ -28,6 +28,7 @@ function initMap() {
 	var ViewModel = function() {
 		var self = this;
 
+		this.articleList = ko.observableArray([]);
 		this.pinList = ko.observableArray([]);
 
 /*		myLocations.forEach(function(pinItem) {
@@ -40,15 +41,23 @@ function initMap() {
 		self.selectedType = ko.observable("All");
 		self.filteredmyLocations = ko.computed(function(pinItem) {
 			var type = self.selectedType();
+			console.log(self.selectedType);
 			if(type === "All") {
+				console.log(type);
+				self.myLocations.forEach(function(myLocations) {
+					if(myLocations.marker)myLocations.marker.setVisible(true);
+				});
+			//	self.myLocations().forEach(type);
+			//	markers.setVisible(true);
+
 	// iterate over self.myLocations & set marker to visible
 				return self.myLocations;
 			} else {
 				var tempList = self.myLocations.slice();
 				return tempList.filter(function(myLocation) {
 					var match = myLocation.type === type;
-					console.log(myLocation)
-					myLocation.marker.setVisible(match)
+					console.log(myLocation);
+					myLocation.marker.setVisible(match);
 					return match;
 				});
 			}
@@ -198,27 +207,40 @@ function zoomToArea() {
 			});
 	}
 }
+
+/*function article(content, url) {
+	var self = this;
+	self.content = content;
+	self.url = url;
+}*/
 //finds wiki info for clicked list item
 function loadData(name) {
-	var $wikiElem = $('#wiki-links');
+	var $wikiElem = $('#wikiLinks');
 
 	$wikiElem.text("");
 
 	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
+/*	var wikiRequestTimeout = setTimeout(function() {
+		$wikiElem.text("Failed to get Wikipedia links");
+	}, 2000);*/
 
 	$.ajax({
 		url: wikiUrl,
 		dataType: "jsonp",
-		jsonp: "callback"
-	}).done(function(response) {
-		var articleList = response[1];
-		console.log(response);
-		for (var i = 0; i < articleList.length; i++) {
-			articleStr = articleList[i];
-			var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-			$wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
+//		jsonp: "callback"
+		success: function(response) {
+			var articleList = response[1];
+			articleList[i] = response[1].articleList || 'No Wiki Info';
+			console.log(articleList)
+			for (var i = 0; i < articleList.length; i++) {
+				articleStr = articleList[i];
+				var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+				$wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
+//				vm.articleList.push(new article(articleStr, url));
 			}
-	}).fail(function (jqXHR, textStatus) {
-		window.alert('could not get wiki info');
+//			clearTimeout(wikiRequestTimeout);
+		}
+//	}).fail(function () {
+//		window.alert('could not get wiki info');
 	});
 }
