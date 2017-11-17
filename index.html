@@ -19,7 +19,7 @@
 				<ul class="list-unstyled components">
 					<h1>Filter List</h1>
 					<div class="filter">
-						<li><input type="radio" name="type" checked value="All" data-bind="checked: selectedType" />All</li>
+						<li><input type="radio" name="type" value="All" data-bind="checked: selectedType" />All</li>
 						<li><input type="radio" name="type" value="Food" data-bind="checked: selectedType" />Food </li>
 						<li><input type="radio" name="type" value="Entertainment" data-bind="checked: selectedType" />Entertainment</li>
 						<li><input type="radio" name="type" value="Body Art" data-bind="checked: selectedType" />Body Art</li>
@@ -28,12 +28,12 @@
 						</ul>
 					</div>
 					<hr>
-					<input data_bind="textInput: filter" id="zoomtotext" placeholder="Search Philadelphia">
+					<input data_bind="textInput: search" id="zoomtotext" placeholder="Search Philadelphia">
 					<button data-bind="click: zoomToArea">Zoom</button>
 					<hr>
-					<li class="wiki-container" data-bind="with: currentPin, marker"></li>
+					<ul class="wiki-container" data-bind="with: currentPin, marker"></ul>
 						<h4 id="wiki-header">Wiki info for:</h4>
-						<ul id="wiki-links"></ul>
+						<ul id="wikiLinks"></ul>
 				</ul>
 			</nav>
 			<div id="content">
