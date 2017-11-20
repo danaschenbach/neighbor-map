@@ -1,4 +1,7 @@
-[{
+//created with Snazzymaps.com
+
+var styles = [
+	{
 		"featureType": "all",
 		"elementType": "all",
 		"stylers": [
@@ -360,5 +363,5 @@
 				"visibility": "off"
 			}
 		]
-	}
+	}	
 ];
