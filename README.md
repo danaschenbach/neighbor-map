@@ -8,6 +8,5 @@ To start off you will be looking at Historical South Street, the true birthplace
 movement. Feel free to check out other parts of Philly by entering them in the search box(BTW Will Smith is from Overbrook
 about 10 blocks from where I grew up).
 
-All this was made possible with intellectual funding by; Udacity forum, Google, stackoverflow.com, friends
-and people like you(sorry been watching PBS...lol)
+All this was made possible with intellectual funding by; Udacity forum, Karl@Udacity, gregrberger@Udacity, Google, stackoverflow.com, friends and people like you(sorry been watching PBS...lol)
 hope you like the holloween theme
