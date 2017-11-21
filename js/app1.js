@@ -79,10 +79,9 @@ function initMap() {
 						wikiLink = '<a href="' + url + '">' + title + '</a>';
 					}
 					self.wikiLink(wikiLink);
-					console.log(wikiLink)
 				}
 			});
-		}
+		};
 	};
 	vm = new ViewModel();
 	ko.applyBindings(vm);
