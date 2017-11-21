@@ -11,7 +11,7 @@ var myLocations = [
 	{name: "South Street Diner", type: "Food", latlngLoc: {lat: 39.940978, lng: -75.145252}},
 	{name: "Philadelphia's Magic Gardens", type: "Entertainment", latlngLoc: {lat: 39.942642, lng: -75.159285}}
 ];
-// create styles array
+// load styes array
 function initMap() {
 	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -62,8 +62,27 @@ function initMap() {
 			largeInfoWindow.marker = null;
 			self.currentPin(clickedPin);
 			showInfoWindow(clickedPin.marker, largeInfoWindow);
-			loadData(clickedPin.name);
+			self.loadData(clickedPin.name);
 		};
+		// get wiki info
+		this.loadData = function(name) {
+			var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
+			$.ajax({
+				url: wikiUrl,
+				dataType: "jsonp",
+				jsonp: "callback",
+				success: function(response) {
+					let wikiLink = 'No Wiki Info';
+					if(response[3].length !== 0) {
+						let url = response[3];
+						let title = response[0];
+						wikiLink = '<a href="' + url + '">' + title + '</a>';
+					}
+					self.wikiLink(wikiLink);
+					console.log(wikiLink)
+				}
+			});
+		}
 	};
 	vm = new ViewModel();
 	ko.applyBindings(vm);
@@ -96,7 +115,7 @@ function initMap() {
 
 		marker.addListener('click', function() {
 			showInfoWindow(this, largeInfoWindow);
-			loadData(name);
+			vm.loadData(name);
 		});
 
 		bounds.extend(markers[i].position);
@@ -202,32 +221,4 @@ function zoomToArea() {
 				}
 			});
 	}
-}
-//finds wiki info for clicked list item
-function loadData(name) {
-//	var $wikiElem = $('#wikiLinks');
-	var viewModel = {
-		wikiLink: ko.observable()
-	};
-//	$wikiElem.text("");
-
-	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
-
-	$.ajax({
-		url: wikiUrl,
-		dataType: "jsonp",
-		jsonp: "callback",
-		success: function(response) {
-			let wikiLink = 'No Wiki Info';
-			viewModel.wikiLink(wikiLink);
-			if(response[3].length !== 0) {
-				let url = response[3];
-				let title = response[0];
-				wikiLink = '<a href="' + url + '">' + title + '</a>';
-			}
-			console.log(wikiLink)
-		
-//			$wikiElem.append('<li>' + wikiLink + '</li>');
-		}
-	});
 }
