@@ -2,6 +2,7 @@ var map;
 var infoWindow;
 var markers = [];
 var vm;
+var viewModel;
 	//locations list-would normally be in database
 var myLocations = [
 	{name: "Jim's Steaks", type: "Food", latlngLoc: {lat: 39.941557, lng: -75.149310}},
@@ -28,13 +29,10 @@ function initMap() {
 	var ViewModel = function() {
 		var self = this;
 
-		this.articleList = ko.observableArray([]);
+		this.url = ko.observable();
+		this.title = ko.observable();
+		this.wikiLink = ko.observable();
 		this.pinList = ko.observableArray([]);
-
-/*		myLocations.forEach(function(pinItem) {
-			self.pinList.push(new Pin(pinItem));
-		});*/
-
 		this.currentPin = ko.observable(this.pinList()[0]);
 // Modified filter function, original by Blake Watson on codepen
 		self.myLocations = myLocations;
@@ -47,8 +45,6 @@ function initMap() {
 				self.myLocations.forEach(function(myLocations) {
 					if(myLocations.marker)myLocations.marker.setVisible(true);
 				});
-			//	self.myLocations().forEach(type);
-			//	markers.setVisible(true);
 
 	// iterate over self.myLocations & set marker to visible
 				return self.myLocations;
@@ -207,40 +203,31 @@ function zoomToArea() {
 			});
 	}
 }
-
-/*function article(content, url) {
-	var self = this;
-	self.content = content;
-	self.url = url;
-}*/
 //finds wiki info for clicked list item
 function loadData(name) {
-	var $wikiElem = $('#wikiLinks');
-
-	$wikiElem.text("");
+//	var $wikiElem = $('#wikiLinks');
+	var viewModel = {
+		wikiLink: ko.observable()
+	};
+//	$wikiElem.text("");
 
 	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + name + '&format=json&callback=wikiCallback';
-/*	var wikiRequestTimeout = setTimeout(function() {
-		$wikiElem.text("Failed to get Wikipedia links");
-	}, 2000);*/
 
 	$.ajax({
 		url: wikiUrl,
 		dataType: "jsonp",
-//		jsonp: "callback"
+		jsonp: "callback",
 		success: function(response) {
-			var articleList = response[1];
-			articleList[i] = response[1].articleList || 'No Wiki Info';
-			console.log(articleList)
-			for (var i = 0; i < articleList.length; i++) {
-				articleStr = articleList[i];
-				var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-				$wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-//				vm.articleList.push(new article(articleStr, url));
+			let wikiLink = 'No Wiki Info';
+			viewModel.wikiLink(wikiLink);
+			if(response[3].length !== 0) {
+				let url = response[3];
+				let title = response[0];
+				wikiLink = '<a href="' + url + '">' + title + '</a>';
 			}
-//			clearTimeout(wikiRequestTimeout);
+			console.log(wikiLink)
+		
+//			$wikiElem.append('<li>' + wikiLink + '</li>');
 		}
-//	}).fail(function () {
-//		window.alert('could not get wiki info');
 	});
 }
