@@ -33,8 +33,8 @@
 					<hr>
 					<ul class="wiki-container" data-bind="with: currentPin, marker"></ul>
 						<h4 id="wiki-header">Wiki info for:</h4>
-						<ul class="wikiLinks" data-bind="wikiLink">
-							<li data-bind="attr: {href: url, title: title}"></li>
+						<ul class="wikiLinks">
+							<li data-bind="html: wikiLink"></li>
 						</ul>
 				</ul>
 			</nav>
