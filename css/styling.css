@@ -11,6 +11,11 @@ html, body {
 	align-items: stretch;
 }
 
+.navbar-btn {
+	position: absolute;
+	z-index: 4;
+}
+
 #content {
 	padding: 20px;
 	min-height: 100vh;
@@ -24,6 +29,7 @@ html, body {
 	background: #7386D5;
 	color: #FF7B33;
 	transition: all 0.3s;
+	z-index: 3;
 }
 
 a, a:hover, a:focus {
@@ -75,16 +81,17 @@ h1,h4 {
 hr {
 	background: #3399FF;
 	height: 1px;
-	margin: 20px 0 20px 0;
+	margin: 5px 0 5px 0;
 	border: none;
 }
 
 #map {
 	bottom:0px;
-	height: 100%;
+	min-height: 100vh;
 	left: 0px;
 	position: absolute;
 	right: 0px;
+	z-index: 2;
 }
 
 #zoomtotext {
