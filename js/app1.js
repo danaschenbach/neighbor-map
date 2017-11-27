@@ -15,7 +15,7 @@ var myLocations = [
 function initMap() {
 	//create new map
 	map = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: 39.941557, lng: -75.149310},
+		center: {lat: 39.941932, lng: -75.152870},
 		zoom: 12,
 		styles: styles,
 		mapTypeControl: false
@@ -80,6 +80,8 @@ function initMap() {
 					}
 					self.wikiLink(wikiLink);
 				}
+			}).fail(function(jqXHR, textStatus) {
+				alert("Failed To Retrieve Wiki Info");
 			});
 		};
 	};
@@ -186,6 +188,10 @@ function showPins() {
 		bounds.extend(markers[i].position);
 	}
 	map.fitBounds(bounds);
+
+	google.maps.event.addDomListener(window, 'resize', function() {
+  		map.fitBounds(bounds);
+  	});
 }
 
 function hidePins() {
