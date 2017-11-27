@@ -3,7 +3,6 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 		<meta charset="utf-8">
-		<script src='js/lib/knockout-3.4.2.js'></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Creepster">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/styling.css">
@@ -56,16 +55,17 @@
 		<script src="js/lib/styler.js"></script>
 		<script src="js/app1.js"></script>
 		<script src="js/lib/jquery.min.js"></script>
+		<script src='js/lib/knockout-3.4.2.js'></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCoVKUrpU93c6jnHHoZfEfOUx2NlqTFUbQ&v=3&callback=initMap" onerror="loadError()">
 		</script>
 		<script type="text/javascript">
-            $(document).ready(function () {
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                });
-            });
-        </script>
+			$(document).ready(function () {
+				$('#sidebarCollapse').on('click', function () {
+					$('#sidebar').toggleClass('active');
+				});
+			});
+		</script>
 	</body>
 </html>
