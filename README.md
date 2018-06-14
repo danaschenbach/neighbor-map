@@ -10,3 +10,5 @@ about 10 blocks from where I grew up).
 
 All this was made possible with intellectual funding by; Udacity forum, Karl@Udacity, gregrberger@Udacity, Google, stackoverflow.com, friends and people like you(sorry been watching PBS...lol)
 hope you like the holloween theme
+
+A quick link to my profile page which has images of projects as well as more indepth info: https://profiles.udacity.com/p/10123989553
